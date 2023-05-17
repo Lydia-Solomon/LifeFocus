@@ -12,20 +12,10 @@
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="./common.js"></script>    
+    <script src="./common.js"></script>   
 
-    <script>
-        function showVoucher(){
-            var x=document.getElementById('createdVoucher');
-            if(x.style.display=='none'){
-                x.style.display=='block';
-            }else{
-                x.style.display=='none';
-            }
-        }
-    </script>
-    
-    <title>E-Voucher</title>
+
+<title>E-Voucher</title>
 </head>
 
 <body>
@@ -57,57 +47,20 @@
     </nav>
     <br>
 
-    
-    <form id="Voucher-Create" class="container" action="C:/Users/91894/Desktop/project/lifeFocus//ViewVoucher.html" method="post">
-        <h3>Provide Details for Voucher</h3>
-        <hr>
-        <div id="Alert-Page"></div>
-        <div class="form-group">
+    <div id="Alert-Page" class="container"></div>
 
-            <small class="form-text text-muted">Name</small>
-            <input id="Name" type="text" class="form-control form-control-lg mb-1" placeholder="Name here" required>
-
-            <small class="form-text text-muted">Amount in Rupees (only numbers) </small>
-            <input id="Amount" type="text" class="form-control form-control-lg mb-1" placeholder="Amount here" required>
-
-            <small class="form-text text-muted">Purpose</small>
-            <input id="Pupose" type="text" class="form-control form-control-lg mb-1" placeholder="Purpose here"
-                required>
-
-            <small class="form-text text-muted">Transaction Date in dd-mm-yyyy format</small>
-            <input id="TransDate" type="date" class="form-control form-control-lg mb-1" placeholder="Purpose here"
-                required>
-
-            <small class="form-text text-muted">Data Entered By</small>
-            <input id="EnteredBy" type="text" class="form-control form-control-lg mb-1" placeholder="Your Name"
-                required>
-
-            
-            <button id="btn-createvoucher" type="button" class="btn btn-primary btn-lg"><a href="C:/Users/91894/Desktop/project/lifeFocus/ViewVoucher.html" style="color: aliceblue;text-decoration: none;">Create Voucher</a></button>
-            <br>
-            <br>
-            <br>
-
-        </div>
-    </form>
-<!-- <section >
-    <div class="container" >
-        <br>
-        <h2>New Voucher Created</h2>
+    <div id="Voucher-Details" class="container">
+        <h2>Voucher <span id="voucherId">V07</span></h2>
         <hr>
 
         <form>
-            <div class="row">
-                <div class="col-3">
-                    <label class="custom-control-label" for="customSwitch1">Voucher:</label>
-                </div>
-                <div class="col">
-                    <label id="lbl-VoucherNo" class="custom-control-label" for="customSwitch1">V07</label>
-                </div>
-            </div>
             
             <div class="row">
-                <div class="col-3">
+                <img id="img-sign" />
+            </div> 
+            <hr>    
+            <div class="row">
+                <div class="col-4">
                     <label class="custom-control-label" for="customSwitch1">Name:</label>
                 </div>
                 <div class="col">
@@ -115,15 +68,23 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-3">
+                <div class="col-4">
                     <label class="custom-control-label" for="customSwitch1">Amount:</label>
                 </div>
                 <div class="col">
                     <label id="lbl-Amount" class="custom-control-label" for="customSwitch1">2000</label>
                 </div>
             </div>
+            <!-- <div class="row">
+                <div class="col-4">
+                    <label class="custom-control-label" for="customSwitch1">Date:</label>
+                </div>
+                <div class="col">
+                    <label id="lbl-TransDate" class="custom-control-label" for="customSwitch1">01-05-23</label>
+                </div>
+            </div>               -->
             <div class="row">
-                <div class="col-3">
+                <div class="col-4">
                     <label class="custom-control-label" for="customSwitch1">Purpose:</label>
                 </div>
                 <div class="col">
@@ -131,24 +92,48 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-3">
-                    <label class="custom-control-label" for="customSwitch1">link:</label>
+                <div class="col-4">
+                    <label class="custom-control-label" for="customSwitch1">Data Entry On:</label>
                 </div>
                 <div class="col">
-                    <a class="nav-link active" aria-current="page" href="C:/Users/91894/Desktop/project/lifeFocus/SignVoucher.html">Click to open</a>
+                    <label id="lbl-datadate" class="custom-control-label" for="customSwitch1">16-05-2023</label>
+                </div>
+            </div>     
+            <hr>            
+            
+            <div class="row">
+                <div class="col-4">
+                    <label class="custom-control-label" for="customSwitch1">ID Type:</label>
+                </div>
+                <div class="col">
+                    <label id="lbl-idtype" class="custom-control-label" for="customSwitch1">Adhar Card</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label class="custom-control-label" for="customSwitch1">ID Number:</label>
+                </div>
+                <div class="col">
+                    <label id="lbl-idno" class="custom-control-label" for="customSwitch1">DEF987</label>
                 </div>
             </div>
             <hr>
-            <br> <br> <br> 
-            <span>Please note down the voucher number to access the voucher details later.</span><br><br>
-            <span>The receipt should be send through Whatsapp or Email. </span>
+            <div class="row">
+                <div class="col-4">
+                    <label class="custom-control-label" for="customSwitch1">Signed On:</label>
+                </div>
+                <div class="col">
+                    <label id="lbl-signdate" class="custom-control-label" for="customSwitch1">16-05-2023</label>
+                </div>
+            </div>                   
+            <hr> 
+            
         </form>
         <br>
         <br>
         <br>
     </div>
-</section>   -->
-    
+</div>
 
 </body>
 

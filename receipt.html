@@ -32,7 +32,7 @@
                     data: JSON.stringify(data),
                     contentType: 'application/json',
                     headers: {
-                        'Origin': 'file:///C:/Users/91894/Desktop/eVoucherApp/htmls/receipt.html'
+                        'Origin': 'file:///C:/Users/91894/Desktop/project/lifeFocus/receipt.html'
                     },
                     success: function(response) {
 						console.log(response);
@@ -60,27 +60,27 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="C:/Users/91894/Desktop/eVoucherApp/htmls/CreateVoucher.html">New Voucher</a>
+                    <a class="nav-link active" aria-current="page" href="C:/Users/91894/Desktop/project/lifeFocus/CreateVoucher.html">New Voucher</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="C:/Users/91894/Desktop/eVoucherApp/htmls/receipt.html">New Receipt</a>
+                    <a class="nav-link active" aria-current="page" href="C:/Users/91894/Desktop/project/lifeFocus/receipt.html">New Receipt</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="C:/Users/91894/Desktop/eVoucherApp/htmls/VoucherReport.html">Report</a>
+                    <a class="nav-link active" aria-current="page" href="C:/Users/91894/Desktop/project/lifeFocus/VoucherReport.html">Report</a>
                 </li>
             </ul>
         </div>
-        <a class="nav-link active" aria-current="page" href="C:/Users/91894/Desktop/eVoucherApp/htmls/Login.html">Logout</a>
+        <a class="nav-link active" aria-current="page" href="C:/Users/91894/Desktop/project/lifeFocus/Login.html">Logout</a>
     </div>
 </nav>
 <br>
 
 
 
-<form id="Voucher-Create" class="container" method="post">
+<form >
     <h2>Provide Receipt Details </h2>
     <hr>
-    
+    <div id="Alert-Page"></div>
     <div class="form-group col-7">
 
         <!-- <small class="form-text text-muted"> User Id</small>
@@ -97,8 +97,8 @@
         <br>
 
 
-        <small class="form-text text-muted"> Email</small>
-        <input id="email" type="text" class="form-control form-control-lg mb-1" placeholder="Email Address"  >
+        <small class="form-text text-muted">Email:</label>
+        <input type="email" id="email" class="form-control form-control-lg mb-1" name="email" placeholder="Email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
         <br>
 
 
