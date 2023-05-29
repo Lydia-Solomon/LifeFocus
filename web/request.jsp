@@ -32,21 +32,21 @@
                         <div class="logo">
                             <a href="index.html"><img src="img/logo.png" alt="" ></a>
                         </div>
+                        <h4>REQUEST FORM</h4>
                         <div class="main-menubar d-flex align-items-center">
                             <nav>
-                                <label><a href="index.html">Home</a></label>
-                                <label><a href="donate_now.jsp">List</a></label>
-                                <label><a href="Login.jsp">Login</a></label>
+                                <label><a href="ben_home.jsp    ">Back</a></label>
+                                <label><a href="index.html">Log out</a></label>
                             </nav>
+                            <!--<div class="menu-bar"><span class="lnr lnr-menu"></span></div>-->
                         </div>
                     </div>
                 </div>
             </div>
 	</header>
+        
         <section id="request">
             <% 
-                // Retrieve the uploaded file
-                              
                 String name = request.getParameter("name");
                 String email = request.getParameter("email");
                 String mobile = request.getParameter("mobile");
@@ -58,7 +58,7 @@
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/lifefocus?"+"user=root&password=root");
                 Statement st=con.createStatement();     
-                int i =st.executeUpdate("Insert into requests(`name`,`mobile`,`amount`,`purpose`,`place`,`email`,`certificate`,`complete`)values('"+name+"','"+mobile+"','"+amount+"','"+purpose+"','"+place+"','"+email+"','"+uploadPath+"','No')");
+                int i =st.executeUpdate("Insert into requests(`name`,`mobile`,`amount`,`purpose`,`place`,`email`,`certificate`,`complete`,`approved`)values('"+name+"','"+mobile+"','"+amount+"','"+purpose+"','"+place+"','"+email+"','"+uploadPath+"','No','Requested')");
                 %>
                             <script type="text/javascript">
                                 alert("Inserted Successfully");
@@ -68,7 +68,7 @@
                 
             %>
         </section>
-        <section class="about-area relative" id="donate" >
+        <section class="project-area relative" id="donate" >
             <div class=""></div>
             <div class="container" style="background-position: center;overflow: hidden;width: 100%;height: 100vh;">   
                 <div class="row d-flex justify-content-center">
@@ -77,7 +77,7 @@
                             <form class="donate-form" id="myForm" method="POST">
                                 <div class="row ">
                                     <div class="col-lg-12 d-flex flex-column align-content-center">
-                                        <h4>REQUEST FORM</h4>
+                                        
                                     </div>
                                     <div class="col-lg-12 d-flex flex-column">
                                         <input name="name" placeholder="Enter your full name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'" class="form-control mt-20" required="" type="text" required>

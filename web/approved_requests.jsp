@@ -1,6 +1,6 @@
 <%-- 
-    Document   : donate_now
-    Created on : May 19, 2023, 6:01:11 PM
+    Document   : approved_requests
+    Created on : May 24, 2023, 11:56:04 AM
     Author     : LYDIA
 --%>
 
@@ -21,28 +21,30 @@
 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="css/login.css">
+        
     </head>
     <body>
-        <header class="relative" >
+        <!--Main Navigation-->
+         <header class="relative" >
             <div class="">
                 <div class="">
                     <div class="header-top d-flex justify-content-between align-items-center">
                         <div class="logo">
                             <a href="index.html"><img src="img/logo.png" alt="" ></a>
                         </div>
+                        <h4>BENEFICIARY</h4>
                         <div class="main-menubar d-flex align-items-center">
                             <nav>
-                                <label><a href="index.html">Home</a></label>
-                                
-                                <label><a href="Login.jsp">Login</a></label>
+                                <label><a href="index.html">Log out</a></label>
                             </nav>
+                            <!--<div class="menu-bar"><span class="lnr lnr-menu"></span></div>-->
                         </div>
                     </div>
                 </div>
             </div>
 	</header>
-        <section class="donation_list">
+<!--Main Navigation-->
+<section class="donation_list">
                 <div class="banner-area relative" style="background-position: center;width: 100%;height: 100vh;">
                    <div class="mask d-flex align-items-center h-100" style="background-color: rgba(0,0,0,.25);">
                        <div class="container">
@@ -57,7 +59,7 @@
                                                         <th scope="col">PURPOSE</th>
                                                         <th scope="col">CONTACT</th>
                                                         <th scope="col">AMOUNT</th>
-                                                        <th></th>
+                                                        <th scope="col">STATUS</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -65,19 +67,20 @@
                         try {
                             Class.forName("com.mysql.jdbc.Driver");
                             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/lifefocus?"+"user=root&password=root");
-                            String sql = "SELECT purpose, mobile ,amount FROM requests where complete='No'";
+                            String sql = "SELECT purpose, mobile ,amount,approved FROM requests where approved='Approved'";
                             Statement stmt = con.createStatement();  
                             ResultSet rs = stmt.executeQuery(sql);
                             while (rs.next()) {
                                 String purpose = rs.getString("purpose");
                                 String contact = rs.getString("mobile");
                                 String amount = rs.getString("amount");
+                                String approved = rs.getString("approved");
                     %>
                                 <tr>
                                 <td><%=purpose%></td>
                                 <td><%=contact%></td>
                                 <td><%=amount%></td>
-                                <td><button type="submit" class="btn-sm"><a href="Login.jsp" class="btn-sm  text-uppercase">DONATE</a></button></td>
+                                <td><%=approved%></td>
                                 </tr>
                     <% 
                             }
@@ -102,6 +105,5 @@
     </div>
   </div>
 </section>
-        
     </body>
 </html>
