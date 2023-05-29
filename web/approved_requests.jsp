@@ -35,7 +35,25 @@
                         <h4>BENEFICIARY</h4>
                         <div class="main-menubar d-flex align-items-center">
                             <nav>
-                                <label><a href="index.html">Log out</a></label>
+                                
+                                <%
+                                    String storedUsername = (String)session.getAttribute("username");
+                                    Class.forName("com.mysql.jdbc.Driver");
+                                    Connection con1=DriverManager.getConnection("jdbc:mysql://localhost:3306/lifefocus?"+"user=root&password=root");
+                            
+                                    String query = "SELECT * FROM beneficiary_registry WHERE ben_name = '"+storedUsername+"'";
+                                    Statement stmt1 = con1.createStatement(); 
+                                    ResultSet resultSet = stmt1.executeQuery(query);
+                                    while (resultSet.next()) {
+                                        String name = resultSet.getString("name");
+                     
+                                %>
+                                
+                                    <ul  style="color: black; position:relative;display: inline-block;display: block;">
+                                        <span class="text-uppercase"><%=name%></span> <i class="bi bi-chevron-down"></i>
+                                        <li ><label><a href="index.html">Log out</a></label></li>
+                                    </ul>
+                               <%}%>
                             </nav>
                             <!--<div class="menu-bar"><span class="lnr lnr-menu"></span></div>-->
                         </div>
@@ -52,6 +70,10 @@
                                <div class="col-12">
                                    <div class="card bg-dark shadow-2-strong">
                                        <div class="card-body">
+                                           <div style="display: flex;justify-content: space-between;align-items: center;">
+                                                <button class="submit-btn btn-sm mt-20 text-uppercase " ><a href="ben_home.jsp" >Requested Requests</a></button>
+                                                <button class="submit-btn btn-sm mt-20 text-uppercase " ><a href="request.jsp" >New Requests</a></button>
+                                           </div>
                                           <div class="table-responsive">
                                               <table class="table table-dark table-borderless mb-0">
                                                 <thead>

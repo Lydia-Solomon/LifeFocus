@@ -30,7 +30,7 @@
         <div class="banner-area relative" style="background-position: center;overflow: hidden;width: 100%;height: 100vh;">
         <div class="login-container">
             <h2>Login</h2>
-            <form>
+            <form action="#login" method="POST">
                 <div style="color:red">${errorMessage}</div>
                 <div class="form-group">
                     <label for="username">User Type</label>
@@ -67,7 +67,7 @@
             String type=request.getParameter("userType");
                 System.out.println("Debug: Username: " + username);
                 System.out.println("Debug: Password: " + password);
-            
+                session.setAttribute("username", username);
             try{
                 if (username != null && password != null) {
                     if(username.equals("admin")&& password.equals("admin123"))

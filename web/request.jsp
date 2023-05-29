@@ -35,8 +35,24 @@
                         <h4>REQUEST FORM</h4>
                         <div class="main-menubar d-flex align-items-center">
                             <nav>
-                                <label><a href="ben_home.jsp    ">Back</a></label>
-                                <label><a href="index.html">Log out</a></label>
+                                
+                                <%
+                                    String storedUsername = (String)session.getAttribute("username");
+                                    Class.forName("com.mysql.jdbc.Driver");
+                                    Connection con1=DriverManager.getConnection("jdbc:mysql://localhost:3306/lifefocus?"+"user=root&password=root");
+                            
+                                    String query = "SELECT * FROM beneficiary_registry WHERE ben_name = '"+storedUsername+"'";
+                                    Statement stmt1 = con1.createStatement(); 
+                                    ResultSet resultSet = stmt1.executeQuery(query);
+                                    while (resultSet.next()) {
+                                        String name = resultSet.getString("name");
+                     
+                                %>
+                                <ul  style="color: black; position:relative;display: inline-block;display: block;">
+                                        <span class="text-uppercase"><%=name%></span> <i class="bi bi-chevron-down"></i>
+                                        <li ><label><a href="index.html">Log out</a></label></li>
+                                    </ul>
+                                <%}%>
                             </nav>
                             <!--<div class="menu-bar"><span class="lnr lnr-menu"></span></div>-->
                         </div>
@@ -45,29 +61,7 @@
             </div>
 	</header>
         
-        <section id="request">
-            <% 
-                String name = request.getParameter("name");
-                String email = request.getParameter("email");
-                String mobile = request.getParameter("mobile");
-                String place = request.getParameter("address");
-                String amount = request.getParameter("amount");
-                String purpose = request.getParameter("purpose");
-                String uploadPath = request.getParameter("certificate");
-                if (name != null ) {
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/lifefocus?"+"user=root&password=root");
-                Statement st=con.createStatement();     
-                int i =st.executeUpdate("Insert into requests(`name`,`mobile`,`amount`,`purpose`,`place`,`email`,`certificate`,`complete`,`approved`)values('"+name+"','"+mobile+"','"+amount+"','"+purpose+"','"+place+"','"+email+"','"+uploadPath+"','No','Requested')");
-                %>
-                            <script type="text/javascript">
-                                alert("Inserted Successfully");
-                            </script>
-                            <%
-                } 
-                
-            %>
-        </section>
+        
         <section class="project-area relative" id="donate" >
             <div class=""></div>
             <div class="container" style="background-position: center;overflow: hidden;width: 100%;height: 100vh;">   
@@ -76,9 +70,8 @@
                         
                             <form class="donate-form" id="myForm" method="POST">
                                 <div class="row ">
-                                    <div class="col-lg-12 d-flex flex-column align-content-center">
-                                        
-                                    </div>
+                                    
+
                                     <div class="col-lg-12 d-flex flex-column">
                                         <input name="name" placeholder="Enter your full name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'" class="form-control mt-20" required="" type="text" required>
                                     </div>
@@ -113,6 +106,25 @@
                     </div>
                 </div>
 	</section>
-        
+        <section id="request">
+            <% 
+                String storedUser = (String)session.getAttribute("username"); 
+                String name = request.getParameter("name");
+                String email = request.getParameter("email");
+                String mobile = request.getParameter("mobile");
+                String place = request.getParameter("address");
+                String amount = request.getParameter("amount");
+                String purpose = request.getParameter("purpose");
+                String uploadPath = request.getParameter("certificate");
+                if (name != null ) {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/lifefocus?"+"user=root&password=root");
+                Statement st=con.createStatement();     
+                int i =st.executeUpdate("Insert into requests(`name`,`mobile`,`amount`,`purpose`,`place`,`email`,`certificate`,`complete`,`approved`,`user`)values('"+name+"','"+mobile+"','"+amount+"','"+purpose+"','"+place+"','"+email+"','"+uploadPath+"','No','Requested','"+storedUser+"')");
+                response.sendRedirect("ben_home.jsp");    
+                } 
+                
+            %>
+        </section>
     </body>
 </html>
