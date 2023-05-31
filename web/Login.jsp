@@ -27,6 +27,18 @@
         <link rel="stylesheet" href="css/login.css">
     </head>
     <body>
+        <header class="relative" >
+            <div class="container">
+                <div class="header-wrap">
+                    <div class="header-top d-flex justify-content-between align-items-center">
+                        <div class="logo">
+                            <a href="index.html"><img src="img/logo.png" alt="" style="width: 200px;height: auto;" ></a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+	</header>
         <div class="banner-area relative" style="background-position: center;overflow: hidden;width: 100%;height: 100vh;">
         <div class="login-container">
             <h2>Login</h2>
@@ -72,7 +84,7 @@
                 if (username != null && password != null) {
                     if(username.equals("admin")&& password.equals("admin123"))
                     { 
-                        response.sendRedirect("index.html");
+                        response.sendRedirect("admin_home.jsp");
                     }
                     else if(type.equals("donor"))
                     { 
@@ -83,6 +95,13 @@
                         rs.next();
                         if(rs.getString("username").equals(username)&& rs.getString("password").equals(password)){
                             response.sendRedirect("donate.jsp");
+                        }
+                        else{
+                          %>
+      <div class="alert">
+        Incorrect credentials! Please try again.
+      </div>
+      <%
                         }
                     }
                     else if(type.equals("beneficiary")){

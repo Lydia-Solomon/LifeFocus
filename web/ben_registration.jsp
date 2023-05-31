@@ -29,7 +29,7 @@
                 <div class="">
                     <div class="header-top d-flex justify-content-between align-items-center">
                         <div class="logo">
-                            <a href="index.html"><img src="img/logo.png" alt="" ></a>
+                            <a href="index.html"><img src="img/logo.png" alt="" style="width: 200px;height: auto;"></a>
                         </div>
                         <h4 style="color: #333333">BENEFICIARY REGISTRATION DETAILS</h4>
                         <div class="main-menubar d-flex align-items-center">
@@ -97,6 +97,7 @@
                                     <div class="col-lg-12 d-flex flex-column align-content-center">
                                         
                                     </div>
+                                    
                                     <div class="col-lg-12 d-flex flex-column">
                                         <input name="name" placeholder="Enter your full name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'" class="form-control mt-20" required="" type="text" required>
                                     </div>

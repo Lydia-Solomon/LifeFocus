@@ -29,7 +29,7 @@
                 <div class="">
                     <div class="header-top d-flex justify-content-between align-items-center">
                         <div class="logo">
-                            <a href="index.html"><img src="img/logo.png" alt="" ></a>
+                            <a href="index.html"><img src="img/logo.png" alt="" style="width: 200px;height: auto;"></a>
                         </div>
                         <div class="main-menubar d-flex align-items-center">
                             <nav>
@@ -43,7 +43,7 @@
             </div>
 	</header>
         <section class="donation_list">
-                <div class="banner-area relative" style="background-position: center;width: 100%;height: 100vh;">
+                <div class="banner-area relative" >
                    <div class="mask d-flex align-items-center h-100" style="background-color: rgba(0,0,0,.25);">
                        <div class="container">
                            <div class="row justify-content-center">

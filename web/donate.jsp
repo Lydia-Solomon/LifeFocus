@@ -36,7 +36,7 @@
                 <div class="">
                     <div class="header-top d-flex justify-content-between align-items-center">
                         <div class="logo">
-                            <a href="index.html"><img src="img/logo.png" alt="" ></a>
+                            <a href="index.html"><img src="img/logo.png" alt="" style="width: 200px;height: auto;"></a>
                         </div>
                         <h4>DONATION DETAILS</h4>
                         <div class="main-menubar d-flex align-items-center">

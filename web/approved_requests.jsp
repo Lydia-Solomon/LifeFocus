@@ -30,7 +30,7 @@
                 <div class="">
                     <div class="header-top d-flex justify-content-between align-items-center">
                         <div class="logo">
-                            <a href="index.html"><img src="img/logo.png" alt="" ></a>
+                            <a href="index.html"><img src="img/logo.png" alt="" style="width: 200px;height: auto;"></a>
                         </div>
                         <h4>BENEFICIARY</h4>
                         <div class="main-menubar d-flex align-items-center">
@@ -46,12 +46,11 @@
                                     ResultSet resultSet = stmt1.executeQuery(query);
                                     while (resultSet.next()) {
                                         String name = resultSet.getString("name");
-                     
                                 %>
                                 
                                     <ul  style="color: black; position:relative;display: inline-block;display: block;">
                                         <span class="text-uppercase"><%=name%></span> <i class="bi bi-chevron-down"></i>
-                                        <li ><label><a href="index.html">Log out</a></label></li>
+                                        <li ><label><a href="Login.jsp">Log out</a></label></li>
                                     </ul>
                                <%}%>
                             </nav>
@@ -86,10 +85,11 @@
                                                 </thead>
                                                 <tbody>
                     <%
+                        String storedUser = (String)session.getAttribute("username");
                         try {
                             Class.forName("com.mysql.jdbc.Driver");
                             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/lifefocus?"+"user=root&password=root");
-                            String sql = "SELECT purpose, mobile ,amount,approved FROM requests where approved='Approved'";
+                            String sql = "SELECT purpose, mobile ,amount,approved FROM requests where approved='Approved'and user='"+storedUser+"'";
                             Statement stmt = con.createStatement();  
                             ResultSet rs = stmt.executeQuery(sql);
                             while (rs.next()) {
