@@ -11,7 +11,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-        <head>
+    <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -56,43 +56,47 @@
                                 Requests
                             </a>
                             
-                            <a class="nav-link" href="admin_approval.jsp" >
+                            <a class="nav-link" href="#" >
                                 <div class="sb-nav-link-icon"><i class="fas fas fa-table"></i></div>
                                 Donor Registry
+                            </a>
+                            
+                            <a class="nav-link" href="admin_ben_details.jsp" >
+                                <div class="sb-nav-link-icon"><i class="fas fas fa-table"></i></div>
+                                Beneficiary Registry
                             </a>
                         </div>
                     </div>
                 </nav>
             </div>
             
-            <div id="layoutSidenav_content">
-                <main>
-                    <div class="text-center text-uppercase">
-                        <h5>pending approval list</h5>
-                    </div>
-                    <section class="donation_list">
-                           <div class="row justify-content-center">
-                                   <div class="card bg-dark shadow-2-strong">
-                                       <div class="card-body">
-                                           <div class="table-responsive">
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="text-center text-uppercase">
+                    <h5>pending approval list</h5>
+                </div>
+                <section class="donation_list">
+                    <div class="row justify-content-center">
+                        <div class="card bg-dark shadow-2-strong">
+                            <div class="card-body">
+                                <div class="table-responsive">
                                               
-                                              <table class="table table-dark table-borderless mb-0">
-                                                <thead>
-                                                    
-                                                    <tr>
-                                                        <th></th>
-                                                        <th scope="col">USER ID</th>
-                                                        <th scope="col">PURPOSE</th>
-                                                        <th scope="col">CONTACT</th>
-                                                        <th scope="col">AMOUNT</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
+                                    <table class="table table-dark table-borderless mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th scope="col">USER ID</th>
+                                                <th scope="col">PURPOSE</th>
+                                                <th scope="col">CONTACT</th>
+                                                <th scope="col">AMOUNT</th>
+                                            </tr>
+                                        </thead>
+                                    <tbody>
                     <%
                         try {
                             Class.forName("com.mysql.jdbc.Driver");
                             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/lifefocus?"+"user=root&password=root");
-                            String sql = "SELECT user_id,purpose, mobile ,amount FROM requests where complete='No'";
+                            String sql = "SELECT user_id,purpose, mobile ,amount FROM requests where approved='Requested'";
                             Statement stmt = con.createStatement();  
                             ResultSet rs = stmt.executeQuery(sql);
                             while (rs.next()) {
@@ -102,13 +106,13 @@
                                 String amount = rs.getString("amount");
                                String linkUrl = "admin_approval.jsp?user_id=" + user_id;
                     %>
-                                <tr>
-                                    <td></td> 
-                                    <td><a class="btn btn-link" href="<%=linkUrl%>" style="text-decoration: none; "><%=user_id%></a></td>
-                                    <td><%=purpose%></td>
-                                    <td><%=contact%></td>
-                                    <td><%=amount%></td>
-                                </tr>
+                                    <tr>
+                                        <td></td> 
+                                        <td><a class="btn btn-link" href="<%=linkUrl%>" style="text-decoration: none; "><%=user_id%></a></td>
+                                        <td><%=purpose%></td>
+                                        <td><%=contact%></td>
+                                        <td><%=amount%></td>
+                                    </tr>
                     <% 
                             }
                              // Close the resources
@@ -122,23 +126,21 @@
                     %>
                                    
                                         </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
         </div>
-
-                    </section>
-                </main>
-            </div>
-        </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="assets/demo/chart-area-demo.js"></script>
-        <script src="assets/demo/chart-bar-demo.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-        <script src="js/datatables-simple-demo.js"></script>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="js/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="assets/demo/chart-area-demo.js"></script>
+    <script src="assets/demo/chart-bar-demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+    <script src="js/datatables-simple-demo.js"></script>
     </body>
 </html>

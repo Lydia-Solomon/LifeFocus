@@ -1,12 +1,13 @@
 <%-- 
-    Document   : admin_home
-    Created on : May 29, 2023, 4:36:36 PM
+    Document   : admin_ben_details
+    Created on : Jun 2, 2023, 11:35:28 AM
     Author     : LYDIA
 --%>
 
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection"%>
 <%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -17,10 +18,46 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Admin-LifeFocus</title>
+        <title>Beneficiary Details</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <style>
+        /* Style for the pop-up window */
+        .popup {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .popup-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 450px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -73,7 +110,7 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="text-center text-uppercase">
-                    <h5>pending approval list</h5>
+                    <h5>beneficiary details</h5>
                 </div>
                 <section class="donation_list">
                     <div class="row justify-content-center">
@@ -86,35 +123,36 @@
                                             <tr>
                                                 <th></th>
                                                 <th scope="col">USER ID</th>
-                                                <th scope="col">PURPOSE</th>
+                                                <th scope="col">NAME</th>
+                                                <th scope="col">EMAIL</th>
                                                 <th scope="col">CONTACT</th>
-                                                <th scope="col">AMOUNT</th>
                                             </tr>
                                         </thead>
-                                    <tbody>
+                                        <tbody>
                     <%
                         try {
                             Class.forName("com.mysql.jdbc.Driver");
                             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/lifefocus?"+"user=root&password=root");
-                            String sql = "SELECT user_id,purpose, mobile ,amount FROM requests where approved='Requested'";
+                            String sql = "SELECT * FROM beneficiary_registry ";
                             Statement stmt = con.createStatement();  
                             ResultSet rs = stmt.executeQuery(sql);
                             while (rs.next()) {
-                                String user_id = rs.getString("user_id");
-                                String purpose = rs.getString("purpose");
-                                String contact = rs.getString("mobile");
-                                String amount = rs.getString("amount");
-                               String linkUrl = "admin_approval.jsp?user_id=" + user_id;
+                                String ben_id = rs.getString("beneficiary_id");
+                                String ben_name = rs.getString("ben_name");
+                                String name = rs.getString("name");
+                                String email = rs.getString("email");
+                                String contact = rs.getString("contact");
+                                session.setAttribute("ben_name", ben_name);
                     %>
                                     <tr>
                                         <td></td> 
-                                        <td><a class="btn btn-link" href="<%=linkUrl%>" style="text-decoration: none; "><%=user_id%></a></td>
-                                        <td><%=purpose%></td>
-                                        <td><%=contact%></td>
-                                        <td><%=amount%></td>
+                                        <td><a style="text-decoration: none;color: white;"  href="#" onclick="document.getElementById('popup').style.display='block';"><%=ben_id%></a></td>
+                                        <td><a style="text-decoration: none;color: white;" href="#" onclick="document.getElementById('popup').style.display='block';"><%=name%></a></td>
+                                        <td><a style="text-decoration: none;color: white;" href="#" onclick="document.getElementById('popup').style.display='block';"><%=email%></a></td>
+                                        <td><a style="text-decoration: none;color: white;" href="#" onclick="document.getElementById('popup').style.display='block';"><%=contact%></a></td>
                                     </tr>
-                    <% 
-                            }
+                    <%
+                        }
                              // Close the resources
                             rs.close();
                             stmt.close();
@@ -123,8 +161,8 @@
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                        
                     %>
-                                   
                                         </tbody>
                                     </table>
                                 </div>
@@ -132,7 +170,39 @@
                         </div>
                     </div>
                 </section>
+                    
+                <div id="popup" class="popup">
+                    <div class="popup-content">
+                        <table class="table table-bordered mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">PURPOSE</th>
+                                                <th scope="col">AMOUNT</th>
+                                                <th scope="col">PLACE</th>
+                                                <th scope="col">STATUS</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                        <%
+                            String storedUsername = (String)session.getAttribute("ben_name");
+                            Class.forName("com.mysql.jdbc.Driver");
+                            Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/lifefocus?"+"user=root&password=root");
+                            String sql = "SELECT * FROM requests ";
+                            Statement stmt = con.createStatement();  
+                            ResultSet rs = stmt.executeQuery(sql);
+                            while (rs.next()) {
+                                String purpose = rs.getString("purpose");
+                                String amount = rs.getString("amount");
+                                String place = rs.getString("place");
+                                String status = rs.getString("approved");
+                            }
+                    %>
+                        <span class="close" onclick="document.getElementById('popup').style.display='none'">&times;</span>
+                        <%=storedUsername%>
+                    </div>
+                </div>    
             </main>
+                    
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

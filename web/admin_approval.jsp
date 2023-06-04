@@ -4,6 +4,8 @@
     Author     : LYDIA
 --%>
 
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.io.OutputStream"%>
 <%@page import="java.sql.Blob"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
@@ -18,7 +20,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Static Navigation - SB Admin</title>
+        <title>Admin Appoval</title>
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
@@ -64,6 +66,11 @@
                                 <div class="sb-nav-link-icon"><i class="fas fas fa-table"></i></div>
                                 Donor Registry
                             </a>
+                            
+                            <a class="nav-link" href="admin_ben_details.jsp" >
+                                <div class="sb-nav-link-icon"><i class="fas fas fa-table"></i></div>
+                                Beneficiary Registry
+                            </a>
                         </div>
                     </div>
                     </nav>
@@ -72,21 +79,23 @@
             <div id="layoutSidenav_content">
                 <main>
                     <%
-                         try {
+                        try {
                             String userId = request.getParameter("user_id");
-                            Class.forName("com.mysql.jdbc.Driver");
+                            Class.forName("com.mysql.cj.jdbc.Driver");
                             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/lifefocus?"+"user=root&password=root");
                             String sql = "SELECT * FROM requests where user_id='"+userId+"'";
                             Statement stmt = con.createStatement();  
+                            
                             ResultSet rs = stmt.executeQuery(sql);
                             while (rs.next()) {
+                                String user_id = rs.getString("user_id");
                                 String name = rs.getString("name");
                                 String email = rs.getString("email");
                                 String place = rs.getString("place");
                                 String mobile = rs.getString("mobile");
                                 String purpose = rs.getString("purpose");
                                 String amount = rs.getString("amount");
-                                Blob imageBlob = rs.getBlob("certificate");
+                                String linkUrl = "approve.jsp?user_id=" + user_id;
                     %>
                           
                     <section class="vh-100" style="background-color: #f4f5f7;">
@@ -117,7 +126,7 @@
                                                            <p class="text-muted">Amount : <%=amount%></p>
                                                        </div>
                                                        <div class="col-12">
-                                                           <p class="text-muted">Id Proof : <%=amount%></p>
+                                                           
                                                        </div>
                                                    </div>
                                                </div>
@@ -127,28 +136,25 @@
                                                <div class="card-body p-4 col-md-12">
                                                    <h5><%=name%></h5>
                                                    <p><%=userId%></p>
-                                                   <button class="btn btn-outline-secondary">Approve</button>
-                                               </div>   
-                                               
+                                                   <button type="submit" class="btn btn-outline-secondary"><a href="<%=linkUrl%>" style="text-decoration: none;color: grey">Approve</a></button>
+                                               </div> 
                                            </div>            
                                        </div>
                                    </div>
                                </div>
                            </div>
                        </div>
-                    </section>
+                   </section>
                                  
-                    <%
-                               }
-                             // Close the resources
-                            rs.close();
-                            stmt.close();
-                            con.close();
-            
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    %>
+                   <%
+                       }   // Close the resources
+                           rs.close();
+                           stmt.close();
+                           con.close();
+                       }catch (Exception e) {
+                           e.printStackTrace();
+                       }
+                   %>
                     
                 </main>
             </div>
