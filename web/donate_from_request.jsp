@@ -1,9 +1,8 @@
 <%-- 
-    Document   : donate
-    Created on : May 21, 2023, 8:25:16 AM
+    Document   : donate_from_request
+    Created on : Jun 7, 2023, 7:43:18 AM
     Author     : LYDIA
 --%>
-
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
@@ -44,14 +43,22 @@
                         <div class="main-menubar d-flex align-items-center">
                             <nav>
                                 <%
-                                String username = request.getParameter("username");
-                                session.setAttribute("user", username);
-                                String user_id = (String) session.getAttribute("user_id");
+                                String user_id = request.getParameter("user_id");
                                 session.setAttribute("user_id", user_id);
+                                Class.forName("com.mysql.jdbc.Driver");
+                                Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/lifefocus?"+"user=root&password=root");
+                                String sql1 = "SELECT * FROM requests where user_id="+user_id;
+                                Statement stmt = conn.createStatement();  
+                                ResultSet rs1 = stmt.executeQuery(sql1);
+                                while (rs1.next()) {
+                                String purpose = rs1.getString("purpose");
+                                String name = rs1.getString("name");
+                                String email = rs1.getString("email");
+                                String amount = rs1.getString("amount");
                                 %>
+                                
                                 <ul  style="color: black; position:relative;display: inline-block;display: block;">
-                                    <li><span class="text-uppercase"><%=username%></span> <i class="bi bi-chevron-down"></i></li>
-                                    <li ><label><a href="Login.jsp">Log out</a></label></li>
+                                    <li ><label><a href="index.html">HOME</a></label></li>
                                 </ul>
                         </div>
                     </div>
@@ -70,26 +77,33 @@
                                         
                                     </div>
                                     <div class="col-lg-12 d-flex flex-column">
-                                        <input name="purpose" placeholder="Purpose for donation" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Purpose for donation'" class="form-control mt-20" required="" type="text" required>
+                                        <input name="purpose" value="<%=purpose%>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Purpose for donation'" class="form-control mt-20" required="" type="text" required>
                                     </div>
                                     <div class="col-lg-6 d-flex flex-column">
-                                        <input name="donor" placeholder="Enter your full name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'" class="form-control mt-20" required="" type="text" required>
+                                        <input name="donor" value="<%=name%>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'" class="form-control mt-20" required="" type="text" required>
                                     </div>
                                     <div class="col-lg-6 d-flex flex-column">
-                                        <input name="email" placeholder="Enter email address" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'" class="form-control mt-20" required="" type="email">
+                                        <input name="email" value="<%=email%>" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'" class="form-control mt-20" required="" type="email">
                                     </div>
+                                    
+                                    <div class="col-lg-12 d-flex flex-column">
+                                        <input name="amount" value="<%=amount%>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Donation amount '" class="form-control mt-20" required="" type="text">
+                                    	 </div>
                                     <div class="col-lg-6 d-flex flex-column">
                                         <input name="date" id="datepicker" width="270" class="form-control mt-20 " required="" type="date" style="color:grey">
                                     </div>
                                     <div class="col-lg-12 d-flex flex-column">
-                                        <input name="amount" placeholder="Donation amount" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Donation amount '" class="form-control mt-20" required="" type="text">
-                                    	<textarea class="form-control mt-20" name="remark" placeholder="Message" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
-                                    </div>
+                                        <textarea class="form-control mt-20" name="remark" placeholder="Message" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
+                                    </div>    
+                                        
                                     <div class="col-lg-12 d-flex justify-content-end send-btn">
 					<button class="submit-btn mt-20 text-uppercase ">donate <span class="lnr lnr-arrow-right"></span></button>
                                     </div>
                                     <div class="alert-msg"></div>
 				</div>
+                                <%
+                                    }
+                                %>
                             </form>
                             
                             <%

@@ -117,11 +117,11 @@
                 String purpose = request.getParameter("purpose");
                 String uploadPath = request.getParameter("certificate");
                 if (name != null ) {
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/lifefocus?"+"user=root&password=root");
-                Statement st=con.createStatement();     
-                int i =st.executeUpdate("Insert into requests(`name`,`mobile`,`amount`,`purpose`,`place`,`email`,`certificate`,`complete`,`approved`,`user`)values('"+name+"','"+mobile+"','"+amount+"','"+purpose+"','"+place+"','"+email+"','"+uploadPath+"','No','Requested','"+storedUser+"')");
-                response.sendRedirect("ben_home.jsp");    
+                    Class.forName("com.mysql.jdbc.Driver");
+                    Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/lifefocus?"+"user=root&password=root");
+                    Statement st=con.createStatement();     
+                    int i =st.executeUpdate("Insert into requests(`name`,`mobile`,`amount`,`purpose`,`place`,`email`,`certificate`,`complete`,`approved`,`user`)values('"+name+"','"+mobile+"','"+amount+"','"+purpose+"','"+place+"','"+email+"','"+uploadPath+"','No','Requested','"+storedUser+"')");
+                    response.sendRedirect("ben_home.jsp");    
                 } 
                 
             %>

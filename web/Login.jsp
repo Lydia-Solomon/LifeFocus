@@ -61,7 +61,7 @@
                     <input type="password" id="password" name="password" placeholder="Enter your password" required>
                 </div>
                 
-                <button type="submit" href="#login">Login</button>
+                <button type="submit" >Login</button>
             </form>
             <div class="pt-md-2 col-md-12">
                 <a href="registration.jsp" style="color: black">&nbsp;&nbsp;&nbsp;&nbsp;New Donor ? Register here <br> </a>
@@ -88,20 +88,23 @@
                     }
                     else if(type.equals("donor"))
                     { 
+                        String user_id = request.getParameter("user_id");
+                        session.setAttribute("user_id", user_id);
                         Class.forName("com.mysql.jdbc.Driver");
                         Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/lifefocus?"+"user=root&password=root");
                         Statement st=con.createStatement();
                         ResultSet rs=st.executeQuery("SELECT * FROM login WHERE username='"+username+"'");
                         rs.next();
                         if(rs.getString("username").equals(username)&& rs.getString("password").equals(password)){
-                            response.sendRedirect("donate.jsp");
+                            //String linkUrl = "donate.jsp?username=" + username;
+                            response.sendRedirect("donate.jsp?username=" + username);
                         }
                         else{
                           %>
-      <div class="alert">
-        Incorrect credentials! Please try again.
-      </div>
-      <%
+                            <script type="text/javascript">
+                                alert("Invalid Credentials");
+                            </script>
+                            <%
                         }
                     }
                     else if(type.equals("beneficiary")){
@@ -112,6 +115,13 @@
                         rs.next();
                         if(rs.getString("ben_name").equals(username)&& rs.getString("password").equals(password)){
                             response.sendRedirect("ben_home.jsp");
+                        }
+                        else{
+                          %>
+                            <script type="text/javascript">
+                                alert("Invalid Credentials");
+                            </script>
+                            <%
                         }
                     }
                     else {

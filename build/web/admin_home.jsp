@@ -104,14 +104,14 @@
                                 String purpose = rs.getString("purpose");
                                 String contact = rs.getString("mobile");
                                 String amount = rs.getString("amount");
-                               String linkUrl = "admin_approval.jsp?user_id=" + user_id;
+                                String linkUrl = "admin_approval.jsp?user_id=" + user_id;
                     %>
                                     <tr>
                                         <td></td> 
                                         <td><a class="btn btn-link" href="<%=linkUrl%>" style="text-decoration: none; "><%=user_id%></a></td>
-                                        <td><%=purpose%></td>
-                                        <td><%=contact%></td>
-                                        <td><%=amount%></td>
+                                        <td><a class="btn btn-link" href="<%=linkUrl%>" style="text-decoration: none; "><%=purpose%></a></td>
+                                        <td><a class="btn btn-link" href="<%=linkUrl%>" style="text-decoration: none; "><%=contact%></a></td>
+                                        <td><a class="btn btn-link" href="<%=linkUrl%>" style="text-decoration: none; "><%=amount%></a></td>
                                     </tr>
                     <% 
                             }

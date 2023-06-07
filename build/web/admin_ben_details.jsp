@@ -22,42 +22,7 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-        <style>
-        /* Style for the pop-up window */
-        .popup {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-
-        .popup-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 30px;
-            border: 1px solid #888;
-            width: 450px;
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-    </style>
+        
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -137,19 +102,20 @@
                             Statement stmt = con.createStatement();  
                             ResultSet rs = stmt.executeQuery(sql);
                             while (rs.next()) {
-                                String ben_id = rs.getString("beneficiary_id");
+                                String beneficiary_id = rs.getString("beneficiary_id");
                                 String ben_name = rs.getString("ben_name");
                                 String name = rs.getString("name");
                                 String email = rs.getString("email");
                                 String contact = rs.getString("contact");
                                 session.setAttribute("ben_name", ben_name);
+                                String linkUrl = "admin_ben_details2.jsp?ben_name=" + ben_name;
                     %>
                                     <tr>
                                         <td></td> 
-                                        <td><a style="text-decoration: none;color: white;"  href="#" onclick="document.getElementById('popup').style.display='block';"><%=ben_id%></a></td>
-                                        <td><a style="text-decoration: none;color: white;" href="#" onclick="document.getElementById('popup').style.display='block';"><%=name%></a></td>
-                                        <td><a style="text-decoration: none;color: white;" href="#" onclick="document.getElementById('popup').style.display='block';"><%=email%></a></td>
-                                        <td><a style="text-decoration: none;color: white;" href="#" onclick="document.getElementById('popup').style.display='block';"><%=contact%></a></td>
+                                        <td><a style="text-decoration: none;color: white;"  href="<%=linkUrl%>" ><%=beneficiary_id%></a></td>
+                                        <td><a style="text-decoration: none;color: white;" href="<%=linkUrl%>"><%=name%></a></td>
+                                        <td><a style="text-decoration: none;color: white;" href="<%=linkUrl%>" ><%=email%></a></td>
+                                        <td><a style="text-decoration: none;color: white;" href="<%=linkUrl%>"><%=contact%></a></td>
                                     </tr>
                     <%
                         }
@@ -171,36 +137,7 @@
                     </div>
                 </section>
                     
-                <div id="popup" class="popup">
-                    <div class="popup-content">
-                        <table class="table table-bordered mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">PURPOSE</th>
-                                                <th scope="col">AMOUNT</th>
-                                                <th scope="col">PLACE</th>
-                                                <th scope="col">STATUS</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                        <%
-                            String storedUsername = (String)session.getAttribute("ben_name");
-                            Class.forName("com.mysql.jdbc.Driver");
-                            Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/lifefocus?"+"user=root&password=root");
-                            String sql = "SELECT * FROM requests ";
-                            Statement stmt = con.createStatement();  
-                            ResultSet rs = stmt.executeQuery(sql);
-                            while (rs.next()) {
-                                String purpose = rs.getString("purpose");
-                                String amount = rs.getString("amount");
-                                String place = rs.getString("place");
-                                String status = rs.getString("approved");
-                            }
-                    %>
-                        <span class="close" onclick="document.getElementById('popup').style.display='none'">&times;</span>
-                        <%=storedUsername%>
-                    </div>
-                </div>    
+                   
             </main>
                     
         </div>

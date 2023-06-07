@@ -1,13 +1,12 @@
 <%-- 
-    Document   : admin_ben_details
-    Created on : Jun 2, 2023, 11:35:28 AM
+    Document   : admin_ben_details2
+    Created on : Jun 5, 2023, 2:55:55 PM
     Author     : LYDIA
 --%>
 
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
-<%@page import="java.sql.Connection"%>
 <%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -23,6 +22,21 @@
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         
+        <style>
+        /* CSS for the pop-up */
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 60%;
+            width: 50%;
+            transform: translate(-50%, -50%);
+            background: cornsilk;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        
+    </style>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -71,83 +85,56 @@
                     </div>
                 </nav>
             </div>
-            
-        <div id="layoutSidenav_content">
-            <main>
-                <div class="text-center text-uppercase">
-                    <h5>beneficiary details</h5>
-                </div>
-                <section class="donation_list">
-                    <div class="row justify-content-center">
-                        <div class="card bg-dark shadow-2-strong">
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                              
-                                    <table class="table table-dark table-borderless mb-0">
+        </div>
+        <div id="popup" class="popup">
+                        <table class="table table-bordered mb-0">
                                         <thead>
                                             <tr>
-                                                <th></th>
-                                                <th scope="col">USER ID</th>
-                                                <th scope="col">NAME</th>
-                                                <th scope="col">EMAIL</th>
+                                                <th scope="col">PURPOSE</th>
+                                                <th scope="col">AMOUNT</th>
+                                                <th scope="col">PLACE</th>
                                                 <th scope="col">CONTACT</th>
+                                                <th scope="col">STATUS</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                    <%
-                        try {
+                        <%
+                            String ben_name = request.getParameter("ben_name");
+                        %>
+                        <div style="display: flex;justify-content: space-between;align-items: center;">
+                            <label class="text-uppercase">Requests made by <%=ben_name%></label>
+                            <a href="admin_ben_details.jsp" style="text-decoration:none;font-size: small">BACK</a>
+                                 
+                        </div>
+                        <%
                             Class.forName("com.mysql.jdbc.Driver");
                             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/lifefocus?"+"user=root&password=root");
-                            String sql = "SELECT * FROM beneficiary_registry ";
-                            Statement stmt = con.createStatement();  
+                            Statement stmt = con.createStatement();
+                            String sql = "SELECT * FROM requests where user='"+ben_name+"' ";
                             ResultSet rs = stmt.executeQuery(sql);
                             while (rs.next()) {
-                                String beneficiary_id = rs.getString("beneficiary_id");
-                                String ben_name = rs.getString("ben_name");
-                                String name = rs.getString("name");
-                                String email = rs.getString("email");
-                                String contact = rs.getString("contact");
-                                session.setAttribute("ben_name", ben_name);
-                                String linkUrl = "admin_ben_details2.jsp?ben_name=" + ben_name;
-                    %>
+                                String user_id = rs.getString("user_id");
+                                String place = rs.getString("place");
+                                String mobile = rs.getString("mobile");
+                                String purpose = rs.getString("purpose");
+                                String status = rs.getString("approved");
+                                String amount = rs.getString("amount");
+                                String linkUrl = "admin_approval.jsp?user_id=" + user_id;
+                            %>
                                     <tr>
-                                        <td></td> 
-                                        <td><a style="text-decoration: none;color: white;"  href="<%=linkUrl%>" ><%=beneficiary_id%></a></td>
-                                        <td><a style="text-decoration: none;color: white;" href="<%=linkUrl%>"><%=name%></a></td>
-                                        <td><a style="text-decoration: none;color: white;" href="<%=linkUrl%>" ><%=email%></a></td>
-                                        <td><a style="text-decoration: none;color: white;" href="<%=linkUrl%>"><%=contact%></a></td>
+                                        <td><a class="btn btn-link" href="<%=linkUrl%>" style="text-decoration: none;color: black "><%=purpose%></a></td>
+                                        <td><a class="btn btn-link" href="<%=linkUrl%>" style="text-decoration: none;color: black  "><%=amount%></a></td>
+                                        <td><a class="btn btn-link" href="<%=linkUrl%>" style="text-decoration: none;color: black "><%=place%></a></td>
+                                        <td><a class="btn btn-link" href="<%=linkUrl%>" style="text-decoration: none;color: black  "><%=mobile%></a></td>
+                                        <td><a class="btn btn-link" href="<%=linkUrl%>" style="text-decoration: none;color: black "><%=status%></a></td>
                                     </tr>
-                    <%
+                        </tbody>
+                        <%
+                            
                         }
-                             // Close the resources
-                            rs.close();
-                            stmt.close();
-                            con.close();
-            
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        
                     %>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                        </table>
                     </div>
-                </section>
-                    
-                   
-            </main>
-                    
-        </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="js/scripts.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="assets/demo/chart-area-demo.js"></script>
-    <script src="assets/demo/chart-bar-demo.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-    <script src="js/datatables-simple-demo.js"></script>
+             
     </body>
 </html>

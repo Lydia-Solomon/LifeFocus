@@ -95,6 +95,7 @@
                                 String mobile = rs.getString("mobile");
                                 String purpose = rs.getString("purpose");
                                 String amount = rs.getString("amount");
+                                String status = rs.getString("approved");
                                 String linkUrl = "approve.jsp?user_id=" + user_id;
                     %>
                           
@@ -124,6 +125,9 @@
                                                        </div>
                                                        <div class="col-12">
                                                            <p class="text-muted">Amount : <%=amount%></p>
+                                                       </div>
+                                                       <div class="col-12">
+                                                           <p class="text-muted">Status : <%=status%></p>
                                                        </div>
                                                        <div class="col-12">
                                                            

@@ -63,21 +63,33 @@
                                                 <tbody>
                     <%
                         try {
+                            String link;
                             Class.forName("com.mysql.jdbc.Driver");
                             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/lifefocus?"+"user=root&password=root");
-                            String sql = "SELECT purpose, mobile ,amount FROM requests where complete='No'";
+                            String sql = "SELECT user_id,purpose, mobile ,amount FROM requests where complete='No'";
                             Statement stmt = con.createStatement();  
                             ResultSet rs = stmt.executeQuery(sql);
                             while (rs.next()) {
+                                String user_id = rs.getString("user_id");
                                 String purpose = rs.getString("purpose");
                                 String contact = rs.getString("mobile");
                                 String amount = rs.getString("amount");
-                    %>
+                                int amountValue = Integer.parseInt(amount);
+                                if(amountValue <=500){
+                                    link="donate_from_request.jsp?user_id=" + user_id;
+                                }
+                                else{
+                                    link="Login.jsp?user_id=" + user_id;
+                                }
+                                
+                                
+                                
+                    %>          
                                 <tr>
                                 <td><%=purpose%></td>
                                 <td><%=contact%></td>
                                 <td><%=amount%></td>
-                                <td><button type="submit" class="btn-sm"><a href="Login.jsp" class="btn-sm  text-uppercase">DONATE</a></button></td>
+                                <td><button type="submit" class="btn-sm"><a href="<%=link%>" class="btn-sm  text-uppercase">DONATE</a></button></td>
                                 </tr>
                     <% 
                             }
